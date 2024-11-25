@@ -33,5 +33,5 @@ jobs:
           -v $(pwd):/workspace \
           gcr.io/kaniko-project/executor:latest \
           --context=/workspace \
-          --dockerfile=/workspace/Dockerfile \
+          --dockerfile=/workspace/.github/workflows/Dockerfile \
           --destination=ghcr.io/${{ github.repository_owner }}/kaniko-test:latest
