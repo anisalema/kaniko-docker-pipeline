@@ -1,0 +1,37 @@
+name: Build and Push Docker Image with Kaniko
+
+on:
+  push:
+    branches:
+      - main  # Workflow uruchomi się na push do głównej gałęzi
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Wybór maszyny roboczej (Ubuntu)
+
+    steps:
+    # Sprawdzenie repozytorium
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # Ustawienie Docker Buildx
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    # Logowanie do GitHub Container Registry (GHCR)
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        username: ${{ github.actor }}  # Twoja nazwa użytkownika GitHub
+        password: ${{ secrets.GITHUB_TOKEN }}  # Token, który GitHub automatycznie generuje
+        registry: ghcr.io  # GitHub Container Registry
+
+    # Budowanie i wypychanie obrazu za pomocą Kaniko
+    - name: Build and Push Docker Image with Kaniko
+      run: |
+        docker run \
+          -v $(pwd):/workspace \
+          gcr.io/kaniko-project/executor:latest \
+          --context=/workspace \
+          --dockerfile=/workspace/Dockerfile \
+          --destination=ghcr.io/${{ github.repository_owner }}/kaniko-test:latest
