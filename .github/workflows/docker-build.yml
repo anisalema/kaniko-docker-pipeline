@@ -30,8 +30,9 @@ jobs:
     - name: Build and Push Docker Image with Kaniko
       run: |
         docker run \
-          -v $(pwd):/workspace \
-          gcr.io/kaniko-project/executor:latest \
-          --context=/workspace \
-          --dockerfile=/workspace/Dockerfile \
-          --destination=ghcr.io/${{ github.repository_owner }}/kaniko-test:latest
+        -v $(pwd):/workspace \
+       gcr.io/kaniko-project/executor:latest \
+        --context=/workspace \
+        --dockerfile=/workspace/Dockerfile \
+        --destination=ghcr.io/${{ github.repository_owner }}/kaniko-test:latest
+
