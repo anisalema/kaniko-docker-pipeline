@@ -23,7 +23,8 @@ jobs:
       uses: docker/login-action@v2
       with:
         username: ${{ github.actor }}  # Twoja nazwa użytkownika GitHub
-        password: ${{ secrets.GITHUB_TOKEN }}  # Token, który GitHub automatycznie generuje
+        password: ${{ secrets.GHCR_TOKEN }}
+  # Token, który GitHub automatycznie generuje
         registry: ghcr.io  # GitHub Container Registry
 
     # Budowanie i wypychanie obrazu za pomocą Kaniko
